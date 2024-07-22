@@ -1,3 +1,5 @@
+// OOP with random generate
+
 int MAX_CIRCLE_NUM = 100;
 float RADIOUS = 100;
 float RADIOUS_VARIANT_SIZE = 20;
@@ -20,7 +22,6 @@ void draw() {
   background(255);
   frameCounter++;
   
-  // Add a new circle at a slower pace
   if (frameCounter % ADD_CIRCLE_INTERVAL == 0) {
     circles.add(new Circle());
   }

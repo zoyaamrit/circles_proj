@@ -8,7 +8,7 @@ float centerX, centerY;
 
 void setup() {
   size(800, 800);
-  surface.setResizable(true);
+  //surface.setResizable(true);
   noCursor();
   
   centerX = width / 2;  
