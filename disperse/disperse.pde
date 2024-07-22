@@ -1,4 +1,3 @@
-// based on existing code = show cohesion and then breaking apar t
 // families dispering/immigration concept
 
 int numParticles = 1000;
@@ -8,7 +7,7 @@ int delayFrames = 120;
 
 void setup() {
   size(800, 800);
-  circleImage = createCircleImage(200, color(255, 0, 0));
+  circleImage = createCircleImage(200, color(192, 189, 165));
   for (int i = 0; i < numParticles; i++) {
     particles[i] = new Particle(random(width / 2 - 100, width / 2 + 100), random(height / 2 - 100, height / 2 + 100), circleImage);
   }
@@ -23,7 +22,7 @@ void draw() {
     }
   } else {
     for (Particle p : particles) {
-      p.updateWithinCircle();
+      text("each on their own path", 40, 120); 
     }
   }
   for (Particle p : particles) {

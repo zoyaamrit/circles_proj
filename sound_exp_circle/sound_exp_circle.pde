@@ -7,52 +7,55 @@ FFT fft;
 
 float[] bandValues;
 float maxDistance;
-int size = 50; 
+int size = 50; // Increased the base size of circles
 
 void setup() {
   size(1000, 1000);
   minim = new Minim(this);
-  player = minim.loadFile("dchPhone.mp3");
+  player = minim.loadFile("audiofile.mp3");
   fft = new FFT(player.bufferSize(), player.sampleRate());
   player.play();
   
   bandValues = new float[fft.specSize()];
-  maxDistance = width / 2.5;
+  maxDistance = width; // Adjusted maxDistance to better fit the screen
 }
 
 void draw() {
   background(0);
   fft.forward(player.mix);
   
-  // collect band value of music
-  float bandSum = 0;
+  // collect band values of music
   int bandsToAverage = fft.specSize() / 2;
   for (int i = 0; i < bandsToAverage; i++) {
     bandValues[i] = fft.getBand(i);
+  }
+  
+  // calculate average band value
+  float bandSum = 0;
+  for (int i = 0; i < bandsToAverage; i++) {
     bandSum += bandValues[i];
   }
-  
-  // calculate pos of circles
   float avgBandValue = bandSum / bandsToAverage;
-  float distance = map(avgBandValue, 0, 95, 0, maxDistance); 
-
-  // place circle
-  float x1 = 200 + (width / width - distance);
-  float x2 = 200 + (width / distance - 50);
-  float y = height / 2;
+  float distance = map(avgBandValue, 0, 100, 200, maxDistance); // Adjusted distance mapping
   
-  // size modification
-  if (dist(x1, y, x2, y) < 100) {
-    //fill(255, 0, 0);  
-    size = 120;
-    x2 = x1;
-  } else {
-    size = 50; 
+  // place circles in a circular pattern
+  float centerX = width / 2;
+  float centerY = height / 2;
+  float radius = distance;
+  
+  for (int i = 0; i < bandsToAverage; i++) {
+    float angle = map(i, 0, bandsToAverage, 0.4, 5);
+    float x = centerX + cos(angle) * radius;
+    float y = centerY + sin(angle) * radius;
+    
+    // size modification based on band value
+    float circleSize = map(bandValues[i], 0, 30, 10, size); // Increased minimum size of circles
+    fill(0); // Color based on band index
+    stroke(map(i, 0, bandsToAverage, 40, 100), 100, 200);
+    strokeWeight(2);
+    
+    ellipse(x, y, circleSize, circleSize);
   }
-  fill(255, 255, 255); 
-  noStroke();
-  ellipse(x1, y, size, size);
-  ellipse(x2, y, 50, 50);
 }
 
 void stop() {
