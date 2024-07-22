@@ -43,8 +43,8 @@ class Boid {
   }
 
   void update() {
-    maxspeed = map(tempo, 60, 180, 1, 10); // Map tempo to speed
-    maxforce = map(volume, 0, 1, 0.01, 2.0); // Map volume to steering force
+    maxspeed = map(tempo, 60, 180, 1, 15); // Map tempo to speed
+    maxforce = map(volume, 0, 1, 0.01, 3.0); // Map volume to steering force
 
     velocity.add(acceleration);
     velocity.limit(maxspeed);

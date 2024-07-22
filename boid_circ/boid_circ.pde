@@ -21,7 +21,7 @@ void setup() {
   fft = new FFT(player.bufferSize(), player.sampleRate());
 
   flock = new Flock();
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 200; i++) {
     flock.addBoid(new Boid(random(width), random(height)));
   }
   player.play();
